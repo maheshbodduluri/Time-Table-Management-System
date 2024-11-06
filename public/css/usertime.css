@@ -1,0 +1,130 @@
+/* General styling for the page */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 20px;
+  }
+  
+  h2 {
+    color: #333;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 1.5rem;
+  }
+  
+  .table-container {
+    margin: 20px 0;
+    overflow-x: auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+  }
+  
+  th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+  }
+  
+  th {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .break {
+    background-color: #f9f9f9;
+    font-style: italic;
+    color: #777;
+  }
+  
+  /* Styling for the faculty names */
+  p {
+    text-align: center;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    background-color: #dff0d8; /* light green background */
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #c3e6cb; /* darker green border */
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.1);
+    color: #155724; /* darker text */
+  }
+  
+  p strong {
+    color: #004085;
+    font-weight: bold;
+  }
+  
+  p::before {
+    content: "📚"; /* optional: adds an icon before the text */
+    margin-right: 5px;
+  }
+  
+  /* Styling for the search container */
+  .search-container {
+    margin-bottom: 30px;
+    text-align: center;
+  }
+  
+  .search-container label {
+    font-size: 1.2rem;
+    margin-right: 10px;
+  }
+  
+  #search {
+    padding: 10px;
+    width: 300px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+  }
+  /* Style for the Update Timetable Button */
+button {
+  background-color: #4CAF50; /* Green background */
+  color: white; /* White text */
+  border: none; /* Remove borders */
+  padding: 10px 20px; /* Add some padding */
+  text-align: center; /* Center the text */
+  text-decoration: none; /* Remove underline */
+  display: inline-block; /* Make it an inline-block */
+  font-size: 16px; /* Font size */
+  margin-top: 20px; /* Space between button and table */
+  cursor: pointer; /* Pointer cursor on hover */
+  border-radius: 5px; /* Rounded corners */
+  transition: background-color 0.3s ease; /* Smooth transition on hover */
+}
+
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+button:focus {
+  outline: none; /* Remove focus outline */
+}
+
+button:active {
+  background-color: #3e8e41; /* Even darker green on click */
+}
+
+  /* Responsive design for smaller devices */
+  @media (max-width: 768px) {
+    table {
+        font-size: 0.8rem;
+    }
+    
+    h2 {
+        font-size: 1.2rem;
+    }
+    
+    p {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+  }

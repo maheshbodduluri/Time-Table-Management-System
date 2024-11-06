@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Timetable</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #a8e063, #56ab2f);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Container Styling */
+        .container {
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 1200px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        /* Heading Styling */
+        h2 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        /* Search Bar */
+        .search-container {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .search-container input {
+            padding: 8px;
+            font-size: 14px;
+            border-radius: 5px;
+            width: 300px;
+            border: 1px solid #ddd;
+        }
+
+        /* Table Styling */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-top: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #56ab2f;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        td input {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        td input.break {
+            background-color: #f9f9f9;
+        }
+
+        /* Button Styling */
+        .update-button {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #56ab2f;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+
+        .update-button:hover {
+            background-color: #3b8e1b;
+        }
+
+        /* Faculty Info */
+        .faculty-info {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        .faculty-info p {
+            font-size: 14px;
+        }
+                /* Remove hover effect on table cells */
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="search-container">
+            <label for="search">Search Classes/Teachers: </label>
+            <input type="text" id="search" placeholder="Type to search...">
+        </div>
+
+        <h2>Edit Timetable for Section <%= timetable.sectionName %></h2>
+        <form action="/admin/edit-timetable" method="POST">
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Day/Hour</th>
+                            <th>08:15-09:10</th>
+                            <th>09:10-10:05</th>
+                            <th>10:05-10:20</th>
+                            <th>10:20-11:15</th>
+                            <th>11:15-12:10</th>
+                            <th>12:10-01:05</th>
+                            <th>01:05-02:00</th>
+                            <th>02:00-02:55</th>
+                            <th>02:55-03:50</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% ['mon', 'tue', 'wed', 'thurs', 'fri', 'sat'].forEach(day => { %>
+                            <tr>
+                                <td><%= day.toUpperCase() %></td>
+                                <% let i=1; %>
+                                <% timetable.day[day].forEach((hour, index) => { %>
+                                    <td>
+                                        <% if(hour==='BREAK') {%>
+                                            BREAK
+                                        <% }else{ %>
+                                            <input type="text" name="<%= day %>_<%= i %>" value="<%= hour %>" 
+                                                   class="<%= hour === 'BREAK' ? 'break' : '' %>" required>
+                                        <% i=i+1;} %>
+                                    </td>
+                                <% }) %>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="faculty-info">
+                <p><strong>Faculty:</strong> 
+                    <% let facultyList = []; %>
+                    <% for (const subject in timetable.faculty) { %>
+                        <% facultyList.push(`${subject} (${timetable.faculty[subject].facultyName})`); %>
+                    <% } %>
+                    <%= facultyList.join(', ') %>
+                </p>
+            </div>
+            <input type="hidden" name="timeTableId" value="<%= _id %>">
+            <button type="submit" class="update-button">Update Timetable</button>
+        </form>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>

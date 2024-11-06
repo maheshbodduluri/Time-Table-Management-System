@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Time Table</title>
+    <link rel="stylesheet" href="/css/usertime.css">
+    <style>
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Center items horizontally */
+            gap: 10px; /* Adjust spacing between items */
+        }
+
+        .search-container label, 
+        .search-container form {
+            margin-bottom: 0;
+        }
+
+        .search-container form button{
+            margin-bottom: 20px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="search-container">
+        <label for="search">Search Classes/Teachers: </label>
+        <input type="text" id="search" placeholder="Type to search...">
+        <form action="/admin/logout" method="POST">
+            <button type="submit">Logout</button>
+        </form>
+    </div>
+    <a href="/admin/add-timetable">Add Timetable</a>
+    <% timetables.forEach((timetable, timetableIndex) => { %>
+        <h2>Section <%= timetable.sectionName %> Timetable</h2>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Day/Hour</th>
+                        <th>08:15-09:10</th>
+                        <th>09:10-10:05</th>
+                        <th>10:05-10:20</th>
+                        <th>10:20-11:15</th>
+                        <th>11:15-12:10</th>
+                        <th>12:10-01:05</th>
+                        <th>01:05-02:00</th>
+                        <th>02:00-02:55</th>
+                        <th>02:55-03:50</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% ['mon', 'tue', 'wed', 'thurs', 'fri', 'sat'].forEach(day => { %>
+                        <tr>
+                            <td><%= day.toUpperCase() %></td>
+                            <% timetable.day[day].forEach((hour, index) => { %>
+                                <td class="<%= hour === 'BREAK' ? 'break' : '' %>"><%= hour %></td>
+                            <% }) %>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        <p><strong>Faculty:</strong> 
+            <% let facultyList = []; %>
+            <% for (const subject in timetable.faculty) { %>
+                <% facultyList.push(`${subject} (${timetable.faculty[subject].facultyName})`); %>
+            <% } %>
+            <%= facultyList.join(', ') %>
+        </p>
+        
+        <!-- Update Button for Entire Timetable -->
+        <a href="/admin/edit-timetable/<%= timetable._id %>">
+            <button>Update Timetable</button>
+        </a>
+
+        <form action="/admin/delete-timetable" method="POST">
+            <input type="hidden" value="<%= timetable._id %>" name="timeTableId">
+            <button type="submit">Delete Table</button>
+        </form>
+
+        <hr>
+    <% }) %>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
